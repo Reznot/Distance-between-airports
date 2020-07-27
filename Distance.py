@@ -6,7 +6,6 @@ data = []
 
 def haversine(dep_lat, dep_lon, arrival_lat, arrival_lon):
     R = 6371  # Earth radius in km
-    R_miles = 3958.8 # Earth radius in miles
 
     dlat = radians(arrival_lat - dep_lat)
     dlon = radians(arrival_lon - dep_lon)
