@@ -5,7 +5,8 @@ data = []
 
 
 def haversine(dep_lat, dep_lon, arrival_lat, arrival_lon):
-    R = 6372.8  # Earth radius in km
+    R = 6371  # Earth radius in km
+    R_miles = 3958.8 # Earth radius in miles
 
     dlat = radians(arrival_lat - dep_lat)
     dlon = radians(arrival_lon - dep_lon)
@@ -17,9 +18,17 @@ def haversine(dep_lat, dep_lon, arrival_lat, arrival_lon):
 with open('Flight Distance Test.csv', 'r+') as f:
     csv_data = csv.reader(f)
     headers = next(csv_data)
-    print(headers)
+    headers.extend(['Distance in KM', 'Distance in miles'])
+    data.append(headers)
 
     for row in csv_data:
-        print(haversine(float(row[3]), float(row[4]), float(row[5]), float(row[6])))
+        distance = haversine(float(row[3]), float(row[4]), float(row[5]), float(row[6]))
+        row.extend([distance, round(distance * 0.62, 2)])
+        data.append(row)
 
-# print(*data, sep='\n')
+with open('Distances.csv', 'w+') as f_results:
+    csv_writer = csv.writer(f_results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    for row in data:
+        csv_writer.writerow(row)
+
+print(data)
