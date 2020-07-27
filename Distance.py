@@ -25,7 +25,7 @@ with open('Flight Distance Test.csv', 'r+') as f:
         row.extend([distance, round(distance * 0.62, 2)])
         data.append(row)
 
-with open('Distances.csv', 'w+') as f_results:
+with open('Distances.csv', 'w+', newline='') as f_results:
     csv_writer = csv.writer(f_results, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     for row in data:
         csv_writer.writerow(row)
